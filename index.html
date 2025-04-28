@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #8bc34a; /* Light green background */
+            background-color: #8bc34a;
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,20 +17,19 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
-            user-select: none; /* Prevent text selection */
-            /* cursor: none; */ /* Optional: Hide default cursor */
+            user-select: none;
+            /* cursor: none; */
         }
 
         .game-container {
             width: 90%;
-            /* Adjust max-width if needed for the taller layout */
-            max-width: 650px; /* Slightly narrower max-width might look better */
+            max-width: 650px;
         }
 
         .game-title {
-            color: #4a2511; /* Dark brown color */
+            color: #4a2511;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            font-size: 2.5rem; /* Responsive font size */
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             text-align: center;
         }
@@ -40,10 +39,10 @@
             justify-content: space-between;
             width: 100%;
             margin-bottom: 20px;
-            background-color: #6b9b37; /* Darker green */
-            padding: 15px 30px; /* Padding */
-            border-radius: 15px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            background-color: #6b9b37;
+            padding: 15px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .score, .timer {
@@ -54,15 +53,13 @@
 
         .game-board {
             display: grid;
-            /* --- UPDATED GRID --- */
-            grid-template-columns: repeat(3, 1fr); /* 3 columns */
-            grid-template-rows: repeat(4, 1fr);    /* 4 rows */
-            grid-gap: 15px; /* Slightly smaller gap might be needed */
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            grid-gap: 15px;
             width: 100%;
-            /* --- UPDATED ASPECT RATIO --- */
-            aspect-ratio: 3 / 4; /* Aspect ratio for 3 columns, 4 rows */
+            aspect-ratio: 3 / 4;
             position: relative;
-            cursor: pointer; /* Indicate the board is clickable */
+            cursor: pointer;
         }
 
         .hole-container {
@@ -75,119 +72,62 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #8D6E63; /* Light brown for hole edge */
-            border-radius: 50%; /* Circular hole */
+            background-color: #8D6E63;
+            border-radius: 50%;
             overflow: hidden;
-            box-shadow: inset 0 8px 16px rgba(0, 0, 0, 0.5); /* Adjusted shadow */
-            /* Adjust border based on new size */
-            border: 12px solid #CDDC39; /* Thinner border */
-            box-sizing: border-box; /* Include border in size */
+            box-shadow: inset 0 8px 16px rgba(0, 0, 0, 0.5);
+            border: 12px solid #CDDC39;
+            box-sizing: border-box;
         }
 
         .hole-inner {
             position: absolute;
             width: 70%;
             height: 70%;
-            background-color: #3E2723; /* Dark brown for inner hole */
+            background-color: #3E2723;
             border-radius: 50%;
-            top: 15%; /* Center the inner hole */
+            top: 15%;
             left: 15%;
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.7); /* Adjusted shadow */
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.7);
         }
 
         .mole {
             position: absolute;
-            width: 60%; /* Mole size relative to hole */
+            width: 60%;
             height: 70%;
-            left: 20%; /* Center the mole horizontally */
-            bottom: -70%; /* Start hidden below the hole */
-            background-color: #795548; /* Mole color */
-            border-radius: 50% 50% 40% 40%; /* Mole head shape */
-            /* --- SLOWER TRANSITION --- */
-            transition: bottom 0.25s ease-out;
-            z-index: 2; /* Mole appears above hole inner */
-            pointer-events: none; /* Mole itself shouldn't capture clicks */
+            left: 20%;
+            bottom: -70%;
+            background-color: #795548;
+            border-radius: 50% 50% 40% 40%;
+            transition: bottom 0.2s ease-out; /* Keep transition reasonable */
+            z-index: 2;
+            pointer-events: none;
         }
 
         .mole.active {
-            bottom: 0; /* Mole pops up */
+            bottom: 0;
         }
 
         /* --- Mole Face Elements --- */
-        .mole-face {
-            position: absolute;
-            width: 100%;
-            height: 40%; /* Position face elements */
-            top: 20%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-             pointer-events: none;
-        }
-        .mole-eyes {
-            display: flex;
-            justify-content: space-around;
-            width: 80%;
-            margin-bottom: 5%;
-             pointer-events: none;
-        }
-        .mole-eye {
-            width: 15%;
-            height: 0;
-            padding-bottom: 15%;
-            background-color: #000;
-            border-radius: 50%;
-             pointer-events: none;
-        }
-        .mole-nose {
-            width: 20%;
-            height: 0;
-            padding-bottom: 10%;
-            background-color: #E91E63;
-            border-radius: 50%;
-             pointer-events: none;
-        }
-        .mole-whiskers {
-            position: absolute;
-            width: 100%;
-            top: 55%;
-            display: flex;
-            justify-content: space-around;
-             pointer-events: none;
-        }
-        .whisker {
-            width: 25%;
-            height: 2px;
-            background-color: #000;
-             pointer-events: none;
-        }
+        .mole-face { position: absolute; width: 100%; height: 40%; top: 20%; display: flex; flex-direction: column; align-items: center; pointer-events: none; }
+        .mole-eyes { display: flex; justify-content: space-around; width: 80%; margin-bottom: 5%; pointer-events: none; }
+        .mole-eye { width: 15%; height: 0; padding-bottom: 15%; background-color: #000; border-radius: 50%; pointer-events: none; }
+        .mole-nose { width: 20%; height: 0; padding-bottom: 10%; background-color: #E91E63; border-radius: 50%; pointer-events: none; }
+        .mole-whiskers { position: absolute; width: 100%; top: 55%; display: flex; justify-content: space-around; pointer-events: none; }
+        .whisker { width: 25%; height: 2px; background-color: #000; pointer-events: none; }
         /* --- End Mole Face Elements --- */
 
-        .hammer {
-            position: fixed;
-            width: 80px;
-            height: 120px;
-            pointer-events: none;
-            z-index: 10;
-            display: none;
-            transform-origin: bottom right;
-        }
-        .hammer-head {
-            position: absolute; width: 60px; height: 40px; background-color: #424242; border-radius: 10px; top: 0; left: 0;
-        }
-        .hammer-handle {
-            position: absolute; width: 20px; height: 90px; background-color: #795548; border-radius: 10px; bottom: 0; right: 0; transform: rotate(-20deg);
-        }
+        .hammer { position: fixed; width: 80px; height: 120px; pointer-events: none; z-index: 10; display: none; transform-origin: bottom right; }
+        .hammer-head { position: absolute; width: 60px; height: 40px; background-color: #424242; border-radius: 10px; top: 0; left: 0; }
+        .hammer-handle { position: absolute; width: 20px; height: 90px; background-color: #795548; border-radius: 10px; bottom: 0; right: 0; transform: rotate(-20deg); }
 
-        .game-over {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; z-index: 10; display: none; font-size: 1.5rem;
-        }
+        .game-over { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; z-index: 10; display: none; font-size: 1.5rem; }
         .game-over h2 { font-size: 3rem; margin-bottom: 20px; }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .game-container { width: 95%; max-width: 95%; } /* Allow more width */
-            .game-board { grid-gap: 10px; border-width: 8px; aspect-ratio: 3 / 4; } /* Ensure ratio holds */
+            .game-container { width: 95%; max-width: 95%; }
+            .game-board { grid-gap: 10px; border-width: 8px; aspect-ratio: 3 / 4; }
             .hole { border-width: 8px; }
             .game-title { font-size: 2rem; }
             .score, .timer { font-size: 18px; }
@@ -196,7 +136,7 @@
             .game-over p { font-size: 1.2rem; }
             .game-over button { font-size: 1rem; padding: 10px 20px; }
         }
-         @media (max-height: 700px) { /* Adjust for shorter screens */
+         @media (max-height: 700px) {
               .game-title { font-size: 1.8rem; margin-bottom: 0.5rem;}
               .game-info { margin-bottom: 10px; padding: 8px 15px; }
               .game-board { grid-gap: 8px; }
@@ -209,12 +149,11 @@
 
         <div class="game-info">
             <div class="score">Score: <span id="score">0</span></div>
-            <!-- Update Timer Display -->
             <div class="timer">Time: <span id="timer">60</span>s</div>
         </div>
 
         <div class="game-board" id="gameBoard">
-            <!-- 12 Holes and moles will be generated here -->
+            <!-- 12 Holes and moles -->
         </div>
 
         <div class="hammer" id="hammer">
@@ -233,7 +172,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Game variables
             let score = 0;
-            // --- UPDATE TIME ---
             let timeLeft = 60;
             let gameInterval;
             let moleInterval;
@@ -249,77 +187,44 @@
             const finalScoreDisplay = document.getElementById('finalScore');
             const restartBtn = document.getElementById('restartBtn');
 
-            // Create holes and moles
+            // Create holes and moles (12 total)
             function createHoles() {
                 gameBoard.innerHTML = '';
-                // --- CREATE 12 HOLES ---
                 for (let i = 0; i < 12; i++) {
-                    const holeContainer = document.createElement('div');
-                    holeContainer.classList.add('hole-container');
-                    const hole = document.createElement('div');
-                    hole.classList.add('hole');
-                    hole.setAttribute('data-index', i);
-                    const holeInner = document.createElement('div');
-                    holeInner.classList.add('hole-inner');
-                    hole.appendChild(holeInner);
-                    const mole = document.createElement('div');
-                    mole.classList.add('mole');
-                    mole.setAttribute('data-index', i);
-                    const moleFace = document.createElement('div');
-                    moleFace.classList.add('mole-face');
-                    const moleEyes = document.createElement('div');
-                    moleEyes.classList.add('mole-eyes');
-                    const leftEye = document.createElement('div');
-                    leftEye.classList.add('mole-eye');
-                    const rightEye = document.createElement('div');
-                    rightEye.classList.add('mole-eye');
-                    moleEyes.appendChild(leftEye);
-                    moleEyes.appendChild(rightEye);
-                    const moleNose = document.createElement('div');
-                    moleNose.classList.add('mole-nose');
-                    const moleWhiskers = document.createElement('div');
-                    moleWhiskers.classList.add('mole-whiskers');
-                    for (let j = 0; j < 3; j++) {
-                         const whiskerContainer = document.createElement('div');
-                         const whisker = document.createElement('div');
-                         whisker.classList.add('whisker');
-                         whiskerContainer.appendChild(whisker);
-                         moleWhiskers.appendChild(whiskerContainer);
-                     }
-                    moleFace.appendChild(moleEyes);
-                    moleFace.appendChild(moleNose);
-                    moleFace.appendChild(moleWhiskers);
-                    mole.appendChild(moleFace);
-                    hole.appendChild(mole);
-                    holeContainer.appendChild(hole);
-                    gameBoard.appendChild(holeContainer);
+                    const holeContainer = document.createElement('div'); holeContainer.classList.add('hole-container');
+                    const hole = document.createElement('div'); hole.classList.add('hole'); hole.setAttribute('data-index', i);
+                    const holeInner = document.createElement('div'); holeInner.classList.add('hole-inner'); hole.appendChild(holeInner);
+                    const mole = document.createElement('div'); mole.classList.add('mole'); mole.setAttribute('data-index', i);
+                    const moleFace = document.createElement('div'); moleFace.classList.add('mole-face');
+                    const moleEyes = document.createElement('div'); moleEyes.classList.add('mole-eyes');
+                    const leftEye = document.createElement('div'); leftEye.classList.add('mole-eye');
+                    const rightEye = document.createElement('div'); rightEye.classList.add('mole-eye');
+                    moleEyes.appendChild(leftEye); moleEyes.appendChild(rightEye);
+                    const moleNose = document.createElement('div'); moleNose.classList.add('mole-nose');
+                    const moleWhiskers = document.createElement('div'); moleWhiskers.classList.add('mole-whiskers');
+                    for (let j = 0; j < 3; j++) { const whiskerContainer = document.createElement('div'); const whisker = document.createElement('div'); whisker.classList.add('whisker'); whiskerContainer.appendChild(whisker); moleWhiskers.appendChild(whiskerContainer); }
+                    moleFace.appendChild(moleEyes); moleFace.appendChild(moleNose); moleFace.appendChild(moleWhiskers);
+                    mole.appendChild(moleFace); hole.appendChild(mole); holeContainer.appendChild(hole); gameBoard.appendChild(holeContainer);
                 }
             }
 
-            // Initialize game
+            // Initialize or reset the game
             function initGame() {
                 createHoles();
                 updateScore(0);
-                // --- UPDATE TIME ---
                 timeLeft = 60;
-                updateTimer(); // Update display immediately
+                updateTimer();
                 gameIsOver = false;
                 hammerAnimating = false;
                 gameOverDisplay.style.display = 'none';
 
-                clearInterval(gameInterval);
-                clearInterval(moleInterval);
+                clearInterval(gameInterval); clearInterval(moleInterval);
                 gameBoard.removeEventListener('click', handleBoardClick);
                 document.removeEventListener('mousemove', moveHammer);
                 document.removeEventListener('touchmove', handleTouchMove);
 
-                gameInterval = setInterval(() => {
-                    timeLeft--;
-                    updateTimer();
-                    if (timeLeft <= 0) endGame();
-                }, 1000);
-
-                moveMoles(); // Start moles popping up
+                gameInterval = setInterval(() => { timeLeft--; updateTimer(); if (timeLeft <= 0) endGame(); }, 1000);
+                moveMoles();
 
                 gameBoard.addEventListener('click', handleBoardClick);
                 document.addEventListener('mousemove', moveHammer);
@@ -327,155 +232,85 @@
             }
 
             // Update score display
-            function updateScore(newScore) {
-                score = newScore;
-                scoreDisplay.textContent = score;
-            }
-
+            function updateScore(newScore) { score = newScore; scoreDisplay.textContent = score; }
             // Update timer display
-            function updateTimer() {
-                // Ensure timer shows 60 initially if timeLeft is 60
-                timerDisplay.textContent = timeLeft >= 0 ? timeLeft : 0;
-            }
+            function updateTimer() { timerDisplay.textContent = timeLeft >= 0 ? timeLeft : 0; }
 
-            // Move the moles randomly
+            // Control mole appearance and timing
             function moveMoles() {
                 const moles = document.querySelectorAll('.mole');
                 clearInterval(moleInterval);
 
                 function showRandomMole() {
                     if (gameIsOver) return;
-
-                    moles.forEach(mole => {
-                        if (mole.classList.contains('active')) {
-                             mole.classList.remove('active');
-                         }
-                    });
-
+                    moles.forEach(mole => { if (mole.classList.contains('active')) { mole.classList.remove('active'); } });
                     const randomIndex = Math.floor(Math.random() * moles.length);
                     moles[randomIndex].classList.add('active');
 
-                    // --- SLOWER SPEED/TIMING ---
-                    // Mole stays up longer, difficulty ramps slower
-                    const minUpTime = Math.max(450, 900 - (score * 10)); // Min 450ms, starts 900ms
-                    const maxUpTime = Math.max(650, 1300 - (score * 10)); // Max 650ms, starts 1300ms
+                    // --- SLIGHTLY FASTER SPEED/TIMING ---
+                    const minUpTime = Math.max(350, 750 - (score * 12)); // Min 350ms, starts 750ms, faster reduction
+                    const maxUpTime = Math.max(550, 1050 - (score * 12)); // Max 550ms, starts 1050ms, faster reduction
                     const upTime = Math.floor(Math.random() * (maxUpTime - minUpTime + 1)) + minUpTime;
 
-                    setTimeout(() => {
-                        if (moles[randomIndex].classList.contains('active')) {
-                            moles[randomIndex].classList.remove('active');
-                        }
-                    }, upTime);
+                    setTimeout(() => { if (moles[randomIndex].classList.contains('active')) { moles[randomIndex].classList.remove('active'); } }, upTime);
                 }
 
-                showRandomMole(); // Show first mole
+                showRandomMole();
 
-                // --- SLOWER SPEED/TIMING ---
-                // Moles appear less frequently, difficulty ramps slower
+                // --- SLIGHTLY FASTER SPEED/TIMING ---
                 moleInterval = setInterval(() => {
-                    if (!gameIsOver) {
-                        showRandomMole();
-                    } else {
-                        clearInterval(moleInterval);
-                    }
-                     // Interval starts at 1200ms (1.2s), decreases with score, minimum interval ~600ms
-                }, 1200 - Math.min(score * 12, 600));
+                    if (!gameIsOver) { showRandomMole(); } else { clearInterval(moleInterval); }
+                    // Interval starts at 1000ms (1s), decreases faster, minimum interval ~400ms
+                }, 1000 - Math.min(score * 14, 600));
             }
 
-            // Handle clicks on the game board (Corrected Logic)
+            // Handle clicks on the game board
             function handleBoardClick(e) {
                 if (gameIsOver || hammerAnimating) return;
-
                 showHammerAnimation(e);
-
-                const clickedElement = document.elementFromPoint(
-                    e.clientX || (e.touches && e.touches[0].clientX),
-                    e.clientY || (e.touches && e.touches[0].clientY)
-                );
-
+                const clickedElement = document.elementFromPoint(e.clientX || (e.touches && e.touches[0].clientX), e.clientY || (e.touches && e.touches[0].clientY));
                 const targetHole = clickedElement ? clickedElement.closest('.hole') : null;
-
                 if (targetHole) {
                     const holeIndex = targetHole.getAttribute('data-index');
-                    // Use querySelector on gameBoard for specificity
                     const targetMole = gameBoard.querySelector(`.mole[data-index="${holeIndex}"]`);
-
                     if (targetMole && targetMole.classList.contains('active')) {
                         updateScore(score + 1);
                         targetMole.classList.remove('active');
                         targetHole.style.transform = 'scale(1.05)';
-                        setTimeout(() => {
-                            if (targetHole) { targetHole.style.transform = 'scale(1)'; }
-                         }, 100);
+                        setTimeout(() => { if (targetHole) { targetHole.style.transform = 'scale(1)'; } }, 100);
                     }
                 }
             }
 
             // Show hammer animation
             function showHammerAnimation(e) {
-                const x = e.clientX || (e.touches && e.touches[0].clientX);
-                const y = e.clientY || (e.touches && e.touches[0].clientY);
-
+                const x = e.clientX || (e.touches && e.touches[0].clientX); const y = e.clientY || (e.touches && e.touches[0].clientY);
                 if (x === undefined || y === undefined || hammerAnimating) return;
-
-                hammerAnimating = true;
-                hammer.style.display = 'block';
-                hammer.style.left = `${x - 40}px`;
-                hammer.style.top = `${y - 100}px`;
+                hammerAnimating = true; hammer.style.display = 'block';
+                hammer.style.left = `${x - 40}px`; hammer.style.top = `${y - 100}px`;
                 hammer.style.transform = 'rotate(-30deg)';
-
                 setTimeout(() => {
                     hammer.style.transform = 'rotate(10deg)';
-                    setTimeout(() => {
-                        hammer.style.display = 'none';
-                        hammerAnimating = false;
-                    }, 150);
+                    setTimeout(() => { hammer.style.display = 'none'; hammerAnimating = false; }, 150);
                 }, 50);
             }
 
-            // Move hammer with cursor
-            function moveHammer(e) {
-                 if (!hammerAnimating) {
-                     hammer.style.left = `${e.clientX - 40}px`;
-                     hammer.style.top = `${e.clientY - 100}px`;
-                 }
-            }
-
-            // Handle touch movement
-             function handleTouchMove(e) {
-                 if (e.touches.length > 0 && !hammerAnimating) {
-                     const touch = e.touches[0];
-                      hammer.style.left = `${touch.clientX - 40}px`;
-                      hammer.style.top = `${touch.clientY - 100}px`;
-                 }
-                 e.preventDefault();
-             }
-
-            // End the game
+            // Move hammer graphic with cursor
+            function moveHammer(e) { if (!hammerAnimating) { hammer.style.left = `${e.clientX - 40}px`; hammer.style.top = `${e.clientY - 100}px`; } }
+            // Handle touch movement for hammer positioning
+            function handleTouchMove(e) { if (e.touches.length > 0 && !hammerAnimating) { const touch = e.touches[0]; hammer.style.left = `${touch.clientX - 40}px`; hammer.style.top = `${touch.clientY - 100}px`; } e.preventDefault(); }
+            // End the game actions
             function endGame() {
-                clearInterval(gameInterval);
-                clearInterval(moleInterval);
-                gameIsOver = true;
-                finalScoreDisplay.textContent = score;
-                gameOverDisplay.style.display = 'flex';
-
-                const moles = document.querySelectorAll('.mole');
-                moles.forEach(mole => mole.classList.remove('active'));
-
-                gameBoard.removeEventListener('click', handleBoardClick);
-                document.removeEventListener('mousemove', moveHammer);
-                document.removeEventListener('touchmove', handleTouchMove);
+                clearInterval(gameInterval); clearInterval(moleInterval); gameIsOver = true;
+                finalScoreDisplay.textContent = score; gameOverDisplay.style.display = 'flex';
+                const moles = document.querySelectorAll('.mole'); moles.forEach(mole => mole.classList.remove('active'));
+                gameBoard.removeEventListener('click', handleBoardClick); document.removeEventListener('mousemove', moveHammer); document.removeEventListener('touchmove', handleTouchMove);
             }
-
             // Restart the game
-            function restartGame() {
-                initGame();
-            }
-
-            // Event listener for restart button
+            function restartGame() { initGame(); }
+            // Set up restart button listener
             restartBtn.addEventListener('click', restartGame);
-
-            // Initialize the game
+            // Start the game initially
             initGame();
         });
     </script>
